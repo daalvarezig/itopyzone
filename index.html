@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +19,7 @@
       color: #0f172a;
     }
 
-    /* ===== SPLASH ===== */
+    /* ===== 🌀 SPLASH ===== */
     #splash-screen {
       position: fixed;
       inset: 0;
@@ -33,7 +34,6 @@
     #splash-logo {
       width: 45vw;
       max-width: 420px;
-      border-radius: 25px;
       filter: drop-shadow(0 0 25px rgba(0, 224, 255, 0.7));
       animation: pulse 2s infinite ease-in-out;
     }
@@ -98,8 +98,8 @@
     }
 
     .settings-icon:hover {
-      color: linear-gradient(90deg, #005fcc, #00b4ff);
-      transform: scale(1.5);
+      color: #21EE0E;
+      transform: rotate(30deg);
     }
 
     /* ===== BUSCADOR CENTRADO ===== */
@@ -113,65 +113,48 @@
         margin-top: 10px;
       }
     }
-
-    /* ===== TABLA ===== */
-    .table-container {
-      margin-top: 30px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-
-    th {
-      background-color: #1e3a8a;
-      color: white;
-      font-weight: 500;
-      text-align: center;
-    }
-
-    td {
-      vertical-align: middle;
-      text-align: center;
-    }
-
-    /* Descripción truncada */
-    .truncate {
-      max-width: 260px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   </style>
 </head>
 
 <body>
   <!-- 🌀 SPLASH -->
   <div id="splash-screen">
-    <img src="assets/logo_04.png" alt="iT@pyz0n-e" id="splash-logo">
+    <img src="assets/logo_05.png" alt="iT@pyz0n-e" id="splash-logo">
   </div>
 
   <!-- 🔹 NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark px-4">
     <div class="container-fluid">
+
+      <!-- Logo / Nombre -->
       <a class="navbar-brand" href="#">
-        <img src="assets/logo_05.png" alt="Logo" width="400" height="100" class="me-2 rounded">
+        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded">
         📦 B13nven1d0 a mi D3sván
       </a>
+
+      <!-- Botón hamburguesa -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- Contenido -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+
+        <!-- 🔹 Buscador centrado -->
         <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
-          <input id="buscador" class="form-control me-2" type="search" placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
+          <input id="buscador" class="form-control me-2" type="search"
+            placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
         </form>
 
+        <!-- 🔹 Botones derecha -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-          <li class="nav-item me-3"><button id="btn-refresh">🔄 Recargar</button></li>
+          <li class="nav-item me-3">
+            <button id="btn-refresh">🔄 Recargar</button>
+          </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               <i class="bi bi-gear-fill settings-icon"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -189,59 +172,12 @@
   <!-- 🔹 CONTENIDO -->
   <main class="container text-center mt-5">
     <h2>Panel de Inventario</h2>
-    <div class="table-container table-responsive mt-4">
-      <table class="table table-hover align-middle">
-        <thead>
-          <tr>
-            <th>ASIN</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Marca</th>
-            <th>Categoría</th>
-            <th>Descripción</th>
-            <th>Palabras clave</th>
-          </tr>
-        </thead>
-        <tbody id="contenido"></tbody>
-      </table>
-    </div>
+    <p>Aquí cargaremos los productos, buscadores y filtros.</p>
   </main>
 
   <script>
-    async function cargarCSV() {
-      const res = await fetch("inventario.csv");
-      const texto = await res.text();
-      const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
-      const datos = filas.slice(1).map(f => f.split(/\t|;/));
-      mostrarTabla(datos);
-    }
-
-    function mostrarTabla(datos) {
-      const cuerpo = document.getElementById("contenido");
-      cuerpo.innerHTML = "";
-      datos.forEach(fila => {
-        const [asin, enlace, nombre, precio, marca, categoria, descripcion, palabras] = fila;
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-          <td>${asin}</td>
-          <td><a href="${enlace}" target="_blank" class="text-primary text-decoration-none fw-semibold">${nombre}</a></td>
-          <td>${precio}</td>
-          <td>${marca}</td>
-          <td>${categoria}</td>
-          <td class="truncate" title="${descripcion}">${descripcion}</td>
-          <td>${palabras}</td>
-        `;
-        cuerpo.appendChild(tr);
-      });
-
-      // Activar tooltips Bootstrap (para descripciones)
-      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
-      tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
-    }
-
-    window.addEventListener("load", async () => {
-      await cargarCSV();
+    // 🎬 SPLASH desaparece tras 2s
+    window.addEventListener("load", () => {
       const splash = document.getElementById("splash-screen");
       setTimeout(() => {
         splash.classList.add("fade-out");
