@@ -113,6 +113,22 @@
         margin-top: 10px;
       }
     }
+/* ===== IMÁGENES INVENTARIO ===== */
+table img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  table img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
   </style>
 </head>
 
@@ -253,10 +269,13 @@
         img.loading = "lazy";
         img.src = `imagenes_amazon/${asin}.jpg`;
         img.onerror = () => {
-          img.src = "assets/logo_05.png";
-          img.style.opacity = "0.6";
-          img.style.objectFit = "contain";
-        };
+  img.src = "assets/logo_05.png";
+  img.style.opacity = "0.7";
+  img.style.objectFit = "contain";
+  img.style.width = "80px";
+  img.style.height = "80px";
+};
+
         tdImg.appendChild(img);
 
         const tdNombre = document.createElement("td");
