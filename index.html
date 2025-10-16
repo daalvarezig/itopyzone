@@ -266,7 +266,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       const img = document.createElement("img");
       img.loading = "lazy";
       img.src = `imagenes_amazon/${asin}.jpg`;
-      img.onerror = () => tdImg.innerHTML = '<div class="no-img">Sin<br>foto</div>';
+      img.onerror = () => {
+  img.src = "assets/logo_05.png";
+  img.style.opacity = "0.6";
+  img.style.objectFit = "contain";
+};
+
       tdImg.appendChild(img);
 
       // 🔗 Nombre con enlace
