@@ -18,7 +18,7 @@
       color: #0f172a;
     }
 
-    /* ===== 🌀 SPLASH ===== */
+    /* ===== SPLASH ===== */
     #splash-screen {
       position: fixed;
       inset: 0;
@@ -36,7 +36,6 @@
       border-radius: 25px;
       filter: drop-shadow(0 0 25px rgba(0, 224, 255, 0.7));
       animation: pulse 2s infinite ease-in-out;
-      border-radius: 25px;				
     }
 
     @keyframes pulse {
@@ -100,7 +99,7 @@
 
     .settings-icon:hover {
       color: linear-gradient(90deg, #005fcc, #00b4ff);
-      transform: scale(1.05);
+      transform: scale(1.5);
     }
 
     /* ===== BUSCADOR CENTRADO ===== */
@@ -136,24 +135,12 @@
       text-align: center;
     }
 
-    img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .no-img {
-      width: 70px;
-      height: 70px;
-      background-color: #e0e0e0;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: 12px;
-      font-style: italic;
+    /* Descripción truncada */
+    .truncate {
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   </style>
 </head>
@@ -168,7 +155,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark px-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded">
+        <img src="assets/logo_05.png" alt="Logo" width="400" height="100" class="me-2 rounded">
         📦 B13nven1d0 a mi D3sván
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -199,101 +186,62 @@
     </div>
   </nav>
 
-  <!-- 🔹 TABLA DE INVENTARIO -->
-  <div class="container table-container table-responsive">
-    <table id="tabla" class="table table-hover align-middle">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Marca</th>
-          <th>Categoría</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody id="contenido"></tbody>
-    </table>
-  </div>
+  <!-- 🔹 CONTENIDO -->
+  <main class="container text-center mt-5">
+    <h2>Panel de Inventario</h2>
+    <div class="table-container table-responsive mt-4">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>ASIN</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Marca</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Palabras clave</th>
+          </tr>
+        </thead>
+        <tbody id="contenido"></tbody>
+      </table>
+    </div>
+  </main>
 
   <script>
-    const estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
-    const contenido = document.getElementById("contenido");
-    const buscador = document.getElementById("buscador");
-
-    async function cargarInventario() {
+    async function cargarCSV() {
       const res = await fetch("inventario.csv");
       const texto = await res.text();
       const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
-      const datos = filas.slice(1).map(f => f.split(";"));
-      window.allData = datos;
+      const datos = filas.slice(1).map(f => f.split(/\t|;/));
       mostrarTabla(datos);
     }
 
     function mostrarTabla(datos) {
-      contenido.innerHTML = "";
+      const cuerpo = document.getElementById("contenido");
+      cuerpo.innerHTML = "";
       datos.forEach(fila => {
-        const asin = fila[0], enlace = fila[1], nombre = fila[2], precio = fila[3],
-              marca = fila[4], categoria = fila[5], descripcion = fila[6];
+        const [asin, enlace, nombre, precio, marca, categoria, descripcion, palabras] = fila;
         const tr = document.createElement("tr");
 
-        const tdImg = document.createElement("td");
-        const img = document.createElement("img");
-        img.src = `imagenes_amazon/${asin}.jpg`;
-        img.onerror = () => tdImg.innerHTML = '<div class="no-img">Sin<br>foto</div>';
-        tdImg.appendChild(img);
-
-        const tdNombre = document.createElement("td");
-        tdNombre.innerHTML = `<a href="${enlace}" target="_blank" class="text-decoration-none fw-semibold text-primary">${nombre}</a>`;
-
-        const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
-        const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
-        const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
-        const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
-
-        const tdEstado = document.createElement("td");
-        const btn = document.createElement("button");
-        btn.className = "btn btn-link p-0 fs-5";
-        const estados = ["🟢", "🟡", "🔴"];
-        let e = estadoProductos[asin] ?? 0;
-        btn.textContent = estados[e];
-        btn.onclick = () => {
-          e = (e + 1) % estados.length;
-          estadoProductos[asin] = e;
-          btn.textContent = estados[e];
-          localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
-        };
-        tdEstado.appendChild(btn);
-
-        tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
-        contenido.appendChild(tr);
+        tr.innerHTML = `
+          <td>${asin}</td>
+          <td><a href="${enlace}" target="_blank" class="text-primary text-decoration-none fw-semibold">${nombre}</a></td>
+          <td>${precio}</td>
+          <td>${marca}</td>
+          <td>${categoria}</td>
+          <td class="truncate" title="${descripcion}">${descripcion}</td>
+          <td>${palabras}</td>
+        `;
+        cuerpo.appendChild(tr);
       });
+
+      // Activar tooltips Bootstrap (para descripciones)
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+      tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
     }
 
-    buscador.addEventListener("input", () => {
-      const texto = buscador.value.toLowerCase();
-      const filtrados = window.allData.filter(f => f.join(" ").toLowerCase().includes(texto));
-      mostrarTabla(filtrados);
-    });
-
-    document.getElementById("btn-refresh").addEventListener("click", () => {
-      localStorage.clear();
-      cargarInventario();
-    });
-
-    document.querySelectorAll(".filter-option").forEach(opt => {
-      opt.addEventListener("click", e => {
-        e.preventDefault();
-        const filtro = e.target.dataset.filter;
-        if (filtro === "todos") return mostrarTabla(window.allData);
-        const filtrados = window.allData.filter(f => (estadoProductos[f[0]] ?? 0) == filtro);
-        mostrarTabla(filtrados);
-      });
-    });
-
     window.addEventListener("load", async () => {
-      await cargarInventario();
+      await cargarCSV();
       const splash = document.getElementById("splash-screen");
       setTimeout(() => {
         splash.classList.add("fade-out");
