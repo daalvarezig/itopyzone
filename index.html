@@ -174,7 +174,21 @@
   <!-- 🔹 CONTENIDO -->
   <main class="container text-center mt-5">
     <h2>Panel de Inventario</h2>
-    <p>Aquí cargaremos los productos, buscadores y filtros.</p>
+    <table id="tablaInventario" class="table table-hover mt-4 align-middle">
+    <thead class="table-primary">
+      <tr>
+        <th>ASIN</th>
+        <th>Enlace</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Marca</th>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Palabras clave</th>
+      </tr>
+    </thead>
+    <tbody id="contenido"></tbody>
+  </table>
   </main>
 
   <script>
