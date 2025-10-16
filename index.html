@@ -272,7 +272,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tabla = document.querySelector("table");
   const cuerpo = document.getElementById("contenido");
 
-  // === Cargar CSV ===
   async function cargarInventario() {
     cargando.style.display = "block";
     cargando.textContent = "⏳ Cargando inventario...";
@@ -283,7 +282,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!res.ok) throw new Error("Archivo CSV no encontrado");
       const texto = await res.text();
 
-      // Detectar separador dinámicamente (; o ,)
       const separador = texto.includes(";") ? ";" : ",";
       const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
       const datos = filas.slice(1).map(linea => {
@@ -310,7 +308,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // === Renderizar tabla ===
   function mostrarTabla(datos) {
     cuerpo.innerHTML = "";
     datos.forEach(fila => {
@@ -325,17 +322,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const tr = document.createElement("tr");
 
-      // 🖼 Imagen
       const tdImg = document.createElement("td");
       const img = document.createElement("img");
       img.loading = "lazy";
       img.src = `imagenes_amazon/${asin}.jpg`;
-      img.onerror = () => tdImg.innerHTML = '<div class="no-img">Sin<br>foto</div>';
-
-
+      img.onerror = () => {
+        img.src = "assets/logo_05.png";
+        img.style.opacity = "0.6";
+        img.style.objectFit = "contain";
+      };
       tdImg.appendChild(img);
 
-      // 🔗 Nombre con enlace
       const tdNombre = document.createElement("td");
       const a = document.createElement("a");
       a.href = enlace || "#";
@@ -349,7 +346,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
       const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
 
-      // 🟢🟡🔴 Estado
       const tdEstado = document.createElement("td");
       const estadoBtn = document.createElement("button");
       estadoBtn.classList.add("estado-btn");
@@ -385,7 +381,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // === Filtrar ===
   function aplicarFiltros() {
     const texto = buscador.value.toLowerCase();
     const filtroEstado = filtroActivo;
@@ -399,7 +394,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     mostrarTabla(filtrados);
   }
 
-  // === Eventos ===
   document.getElementById("btn-refresh").addEventListener("click", async () => {
     localStorage.clear();
     estadoProductos = {};
@@ -419,22 +413,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // === Inicialización ===
   await cargarInventario();
 });
+
+// 🎬 SPLASH desaparece tras 2s
+window.addEventListener("load", () => {
+  const splash = document.getElementById("splash-screen");
+  setTimeout(() => {
+    splash.classList.add("fade-out");
+    setTimeout(() => splash.remove(), 1000);
+  }, 2000);
+});
 </script>
-
-
-
-<script>
-    // 🎬 SPLASH desaparece tras 2s
-    window.addEventListener("load", () => {
-      const splash = document.getElementById("splash-screen");
-      setTimeout(() => {
-        splash.classList.add("fade-out");
-        setTimeout(() => splash.remove(), 1000);
-      }, 2000);
-    });
-  </script>
 </body>
 </html>
