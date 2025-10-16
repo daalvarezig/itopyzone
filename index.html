@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iT@pyz0n-e</title>
   <style>
-    /* ==== ESTILOS BÁSICOS ==== */
+    /* ==== GLOBAL ==== */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -13,29 +13,35 @@
       color: #0f172a;
     }
 
+    /* ==== HEADER ==== */
     header {
-      background: linear-gradient(90deg, #0a1a3f, #1e3a8a);
-      color: #e0f2ff;
-      padding: 20px;
-      text-align: center;
+      background: linear-gradient(90deg, #08122d, #0a1a3f, #102a6b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
 
+    header img {
+      max-width: 320px;
+      width: 60%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.6));
+    }
+
+    /* ==== MAIN ==== */
     main {
-      padding: 40px;
       text-align: center;
+      padding: 50px 20px;
     }
 
     h1 {
       color: #1e3a8a;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
     }
 
-    p {
-      font-size: 1rem;
-      color: #333;
-    }
-
+    /* ==== FOOTER ==== */
     footer {
       background: #0a1a3f;
       color: #e0f2ff;
@@ -51,13 +57,12 @@
 
 <body>
   <header>
-    <h1>iT@pyz0n-e</h1>
-    <p>Proyecto base limpio</p>
+    <img src="logo_04.jpg" alt="Logo iT@pyz0n-e">
   </header>
 
   <main>
-    <h2>Bienvenido</h2>
-    <p>Aquí comenzará la nueva versión del proyecto.</p>
+    <h1>Bienvenido a iT@pyz0n-e</h1>
+    <p>Comenzamos con la versión base limpia y tu logo integrado en el header.</p>
   </main>
 
   <footer>
