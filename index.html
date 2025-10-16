@@ -202,106 +202,179 @@
     });
   </script>
 	<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const rutaCSV = "inventario.csv";
+document.addEventListener("DOMContentLoaded", async () => {
+  // === Estado de productos y filtro guardado ===
+  let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
+  let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
 
-  async function leerTextoCSV(ruta) {
-    const res = await fetch(ruta);
-    const buffer = await res.arrayBuffer();
+  const cargando = document.getElementById("cargando");
+  const buscador = document.getElementById("buscador");
+  const tabla = document.querySelector("table");
+
+  // === CARGAR INVENTARIO ===
+  async function cargarInventario() {
+    const rutaCSV = "inventario.csv";
+    cargando.textContent = "⏳ Cargando inventario...";
+    cargando.style.display = "block";
+    tabla.style.display = "none";
+
     try {
-      return new TextDecoder("utf-8").decode(buffer);
-    } catch {
-      return new TextDecoder("iso-8859-1").decode(buffer);
+      const res = await fetch(rutaCSV);
+      const buffer = await res.arrayBuffer();
+      let texto;
+      try { texto = new TextDecoder("utf-8").decode(buffer); }
+      catch { texto = new TextDecoder("iso-8859-1").decode(buffer); }
+
+      const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
+      const datos = filas.slice(1).map(linea => {
+        const partes = [];
+        let actual = "", comillas = false;
+        for (let ch of linea) {
+          if (ch === '"') comillas = !comillas;
+          else if (ch === ';' && !comillas) {
+            partes.push(actual.trim());
+            actual = "";
+          } else actual += ch;
+        }
+        partes.push(actual.trim());
+        return partes;
+      });
+
+      window.allData = datos;
+      mostrarTabla(datos);
+      cargando.style.display = "none";
+      tabla.style.display = "table";
+    } catch (error) {
+      console.error("Error cargando inventario:", error);
+      cargando.textContent = "⚠️ Error al cargar el inventario";
     }
   }
 
-  function parseCSVLine(linea) {
-    const regex = /(".*?"|[^;]+)(?=;|$)/g;
-    const valores = [];
-    let match;
-    while ((match = regex.exec(linea)) !== null) {
-      let valor = match[0].trim();
-      if (valor.startsWith('"') && valor.endsWith('"')) {
-        valor = valor.slice(1, -1);
-      }
-      valores.push(valor);
-    }
-    return valores;
-  }
-
-  async function cargarCSV() {
-    const texto = await leerTextoCSV(rutaCSV);
-    const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
-    const datos = filas.slice(1).map(f => parseCSVLine(f));
-    mostrarTabla(datos);
-    window.allData = datos;
-  }
-
+  // === MOSTRAR TABLA ===
   function mostrarTabla(datos) {
     const cuerpo = document.getElementById("contenido");
     cuerpo.innerHTML = "";
 
     datos.forEach(fila => {
-      if (fila.length < 2) return;
-
       const asin = fila[0] || "";
       const enlace = fila[1] || "";
-      const nombre = fila[2] || "";
+      const nombre = fila[2] || "(Sin nombre)";
       const precio = fila[3] || "";
       const marca = fila[4] || "";
       const categoria = fila[5] || "";
       const descripcion = fila[6] || "";
-      const palabras = fila[7] || "";
 
       const tr = document.createElement("tr");
 
-      const tdASIN = document.createElement("td");
-      if (enlace) {
-        const link = document.createElement("a");
-        link.href = enlace;
-        link.target = "_blank";
-        link.textContent = asin;
-        link.classList.add("asin-link");
-        tdASIN.appendChild(link);
-      } else {
-        tdASIN.textContent = asin;
-      }
+      // Imagen
+      const tdImg = document.createElement("td");
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = `imagenes_amazon/${asin}.jpg`;
+      img.onerror = () => tdImg.innerHTML = '<div class="no-img">Sin<br>foto</div>';
+      tdImg.appendChild(img);
 
+      // Nombre (enlace)
       const tdNombre = document.createElement("td");
-      tdNombre.textContent = nombre;
+      const a = document.createElement("a");
+      a.href = enlace || "#";
+      a.target = "_blank";
+      a.classList.add("nombre-link");
+      a.textContent = nombre;
+      tdNombre.appendChild(a);
 
-      const tdPrecio = document.createElement("td");
-      tdPrecio.textContent = precio;
+      // Resto de columnas
+      const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
+      const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
+      const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
+      const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
 
-      const tdMarca = document.createElement("td");
-      tdMarca.textContent = marca;
+      // Estado (🟢🟡🔴)
+      const tdEstado = document.createElement("td");
+      const estadoBtn = document.createElement("button");
+      estadoBtn.classList.add("estado-btn");
+      estadoBtn.style.border = "none";
+      estadoBtn.style.background = "none";
+      estadoBtn.style.cursor = "pointer";
+      estadoBtn.style.fontSize = "20px";
 
-      const tdCategoria = document.createElement("td");
-      tdCategoria.textContent = categoria;
+      const estados = [
+        { emoji: "🟢", texto: "Disponible" },
+        { emoji: "🟡", texto: "Reservado" },
+        { emoji: "🔴", texto: "Vendido" }
+      ];
 
-      const tdDescripcion = document.createElement("td");
-      tdDescripcion.textContent = descripcion;
+      let estadoActual = (estadoProductos[asin] !== undefined) ? estadoProductos[asin] : 1;
+      estadoBtn.textContent = estados[estadoActual].emoji;
+      estadoBtn.title = estados[estadoActual].texto;
+      estadoBtn.setAttribute("data-estado", estadoActual);
 
-      const tdPalabras = document.createElement("td");
-      tdPalabras.textContent = palabras;
+      estadoBtn.addEventListener("click", () => {
+        estadoActual = (estadoActual + 1) % estados.length;
+        estadoProductos[asin] = estadoActual;
+        estadoBtn.textContent = estados[estadoActual].emoji;
+        estadoBtn.title = estados[estadoActual].texto;
+        estadoBtn.setAttribute("data-estado", estadoActual);
+        localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
+      });
 
-      tr.append(tdASIN, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdPalabras);
+      tdEstado.appendChild(estadoBtn);
+
+      tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
       cuerpo.appendChild(tr);
     });
   }
 
-  const buscador = document.getElementById("buscador");
-  buscador.addEventListener("input", (e) => {
-    const texto = e.target.value.toLowerCase();
-    const filtrados = window.allData.filter(fila =>
-      fila.join(" ").toLowerCase().includes(texto)
-    );
+  // === FILTRO DE BUSCADOR Y ESTADO ===
+  function aplicarFiltros() {
+    const texto = buscador.value.toLowerCase();
+    const filtroEstado = filtroActivo;
+
+    const filtrados = window.allData.filter(f => {
+      const asin = f[0];
+      const textoCoincide = f.join(" ").toLowerCase().includes(texto);
+      const estado = estadoProductos[asin] ?? 1;
+      if (filtroEstado === "todos") return textoCoincide;
+      return textoCoincide && parseInt(filtroEstado) === estado;
+    });
+
     mostrarTabla(filtrados);
+  }
+
+  // === EVENTOS ===
+  document.getElementById("btn-refresh").addEventListener("click", async () => {
+    localStorage.clear();
+    estadoProductos = {};
+    filtroActivo = "todos";
+    await cargarInventario();
   });
 
-  cargarCSV();
+  buscador.addEventListener("input", aplicarFiltros);
+
+  document.querySelectorAll(".filter-option").forEach(opt => {
+    opt.addEventListener("click", e => {
+      e.preventDefault();
+      const filtro = e.target.getAttribute("data-filter");
+      filtroActivo = filtro;
+      localStorage.setItem("filtroActivo", filtro);
+      aplicarFiltros();
+    });
+  });
+
+  // === INICIO ===
+  window.addEventListener("load", async () => {
+    await cargarInventario();
+    const splash = document.getElementById("splash-screen");
+    if (splash) {
+      setTimeout(() => {
+        splash.classList.add("fade-out");
+        setTimeout(() => splash.remove(), 1000);
+      }, 1500);
+    }
+  });
 });
 </script>
+
 
 </body>
 </html>
