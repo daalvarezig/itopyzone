@@ -172,66 +172,62 @@
   </nav>
 
   <!-- 🔹 CONTENIDO -->
-  <main class="container text-center mt-5">
-    <h2>Panel de Inventario</h2>
-    <table id="tablaInventario" class="table table-hover mt-4 align-middle">
-    <thead class="table-primary">
-      <tr>
-        <th>ASIN</th>
-        <th>Enlace</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Marca</th>
-        <th>Categoría</th>
-        <th>Descripción</th>
-        <th>Palabras clave</th>
-      </tr>
-    </thead>
-    <tbody id="contenido"></tbody>
-  </table>
-  </main>
+  <main class="container mt-4">
+  <!-- Indicador de carga -->
+  <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
+    ⏳ Cargando inventario...
+  </div>
 
-  <script>
-    // 🎬 SPLASH desaparece tras 2s
-    window.addEventListener("load", () => {
-      const splash = document.getElementById("splash-screen");
-      setTimeout(() => {
-        splash.classList.add("fade-out");
-        setTimeout(() => splash.remove(), 1000);
-      }, 2000);
-    });
-  </script>
-	<script>
+  <!-- Tabla del inventario -->
+  <div class="table-responsive">
+    <table class="table align-middle shadow-sm" style="display:none;">
+      <thead>
+        <tr>
+          <th style="width:90px;">Imagen</th>
+          <th>Nombre</th>
+          <th style="width:100px;">Precio</th>
+          <th style="width:140px;">Marca</th>
+          <th style="width:160px;">Categoría</th>
+          <th style="min-width:300px;">Descripción</th>
+          <th style="width:100px;">Estado</th>
+        </tr>
+      </thead>
+      <tbody id="contenido"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
 document.addEventListener("DOMContentLoaded", async () => {
-  // === Estado de productos y filtro guardado ===
+  // === Estado persistente ===
   let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
   let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
 
   const cargando = document.getElementById("cargando");
   const buscador = document.getElementById("buscador");
   const tabla = document.querySelector("table");
+  const cuerpo = document.getElementById("contenido");
 
-  // === CARGAR INVENTARIO ===
+  // === Cargar CSV ===
   async function cargarInventario() {
-    const rutaCSV = "inventario.csv";
-    cargando.textContent = "⏳ Cargando inventario...";
     cargando.style.display = "block";
+    cargando.textContent = "⏳ Cargando inventario...";
     tabla.style.display = "none";
 
     try {
-      const res = await fetch(rutaCSV);
-      const buffer = await res.arrayBuffer();
-      let texto;
-      try { texto = new TextDecoder("utf-8").decode(buffer); }
-      catch { texto = new TextDecoder("iso-8859-1").decode(buffer); }
+      const res = await fetch("inventario.csv", { cache: "no-store" });
+      if (!res.ok) throw new Error("Archivo CSV no encontrado");
+      const texto = await res.text();
 
+      // Detectar separador dinámicamente (; o ,)
+      const separador = texto.includes(";") ? ";" : ",";
       const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
       const datos = filas.slice(1).map(linea => {
         const partes = [];
         let actual = "", comillas = false;
         for (let ch of linea) {
           if (ch === '"') comillas = !comillas;
-          else if (ch === ';' && !comillas) {
+          else if (ch === separador && !comillas) {
             partes.push(actual.trim());
             actual = "";
           } else actual += ch;
@@ -244,18 +240,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       mostrarTabla(datos);
       cargando.style.display = "none";
       tabla.style.display = "table";
-    } catch (error) {
-      console.error("Error cargando inventario:", error);
-      cargando.textContent = "⚠️ Error al cargar el inventario";
+    } catch (err) {
+      console.error("Error cargando inventario:", err);
+      cargando.textContent = "⚠️ Error al cargar el inventario.";
     }
   }
 
-  // === MOSTRAR TABLA ===
+  // === Renderizar tabla ===
   function mostrarTabla(datos) {
-    const cuerpo = document.getElementById("contenido");
     cuerpo.innerHTML = "";
-
     datos.forEach(fila => {
+      if (fila.length < 6) return;
       const asin = fila[0] || "";
       const enlace = fila[1] || "";
       const nombre = fila[2] || "(Sin nombre)";
@@ -266,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const tr = document.createElement("tr");
 
-      // Imagen
+      // 🖼 Imagen
       const tdImg = document.createElement("td");
       const img = document.createElement("img");
       img.loading = "lazy";
@@ -274,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       img.onerror = () => tdImg.innerHTML = '<div class="no-img">Sin<br>foto</div>';
       tdImg.appendChild(img);
 
-      // Nombre (enlace)
+      // 🔗 Nombre con enlace
       const tdNombre = document.createElement("td");
       const a = document.createElement("a");
       a.href = enlace || "#";
@@ -283,13 +278,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       a.textContent = nombre;
       tdNombre.appendChild(a);
 
-      // Resto de columnas
       const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
       const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
       const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
       const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
 
-      // Estado (🟢🟡🔴)
+      // 🟢🟡🔴 Estado
       const tdEstado = document.createElement("td");
       const estadoBtn = document.createElement("button");
       estadoBtn.classList.add("estado-btn");
@@ -297,6 +291,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       estadoBtn.style.background = "none";
       estadoBtn.style.cursor = "pointer";
       estadoBtn.style.fontSize = "20px";
+      estadoBtn.title = "Cambiar estado";
 
       const estados = [
         { emoji: "🟢", texto: "Disponible" },
@@ -319,17 +314,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       tdEstado.appendChild(estadoBtn);
-
       tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
       cuerpo.appendChild(tr);
     });
   }
 
-  // === FILTRO DE BUSCADOR Y ESTADO ===
+  // === Filtrar ===
   function aplicarFiltros() {
     const texto = buscador.value.toLowerCase();
     const filtroEstado = filtroActivo;
-
     const filtrados = window.allData.filter(f => {
       const asin = f[0];
       const textoCoincide = f.join(" ").toLowerCase().includes(texto);
@@ -337,11 +330,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (filtroEstado === "todos") return textoCoincide;
       return textoCoincide && parseInt(filtroEstado) === estado;
     });
-
     mostrarTabla(filtrados);
   }
 
-  // === EVENTOS ===
+  // === Eventos ===
   document.getElementById("btn-refresh").addEventListener("click", async () => {
     localStorage.clear();
     estadoProductos = {};
@@ -361,20 +353,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // === INICIO ===
-  window.addEventListener("load", async () => {
-    await cargarInventario();
-    const splash = document.getElementById("splash-screen");
-    if (splash) {
-      setTimeout(() => {
-        splash.classList.add("fade-out");
-        setTimeout(() => splash.remove(), 1000);
-      }, 1500);
-    }
-  });
+  // === Inicialización ===
+  await cargarInventario();
 });
 </script>
 
+</script>
 
+<script>
+    // 🎬 SPLASH desaparece tras 2s
+    window.addEventListener("load", () => {
+      const splash = document.getElementById("splash-screen");
+      setTimeout(() => {
+        splash.classList.add("fade-out");
+        setTimeout(() => splash.remove(), 1000);
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
