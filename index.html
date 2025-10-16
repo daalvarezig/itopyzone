@@ -1,72 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iT@pyz0n-e</title>
   <style>
-    /* ==== GLOBAL ==== */
+    /* ================= GLOBAL ================= */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f8fbff;
+      background: linear-gradient(180deg, #f8fbff, #eef4ff);
       color: #0f172a;
     }
 
-    /* ==== HEADER ==== */
-    header {
-      background: linear-gradient(90deg, #08122d, #0a1a3f, #102a6b);
+    /* ================= SPLASH SCREEN ================= */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #00304a 0%, #012535 40%, #00121e 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 25px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      z-index: 9999;
+      animation: glow 6s infinite alternate ease-in-out;
+      transition: opacity 1s ease;
     }
 
-    header img {
-      max-width: 320px;
-      width: 60%;
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.6));
+    #splash-logo {
+      width: auto;
+      max-width: 45vw;
+      max-height: 45vh;
+      border-radius: 12px;
+      filter: drop-shadow(0 0 25px rgba(0, 224, 255, 0.7));
+      animation: pulse 2.2s infinite ease-in-out;
     }
 
-    /* ==== MAIN ==== */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.9; }
+    }
+
+    @keyframes glow {
+      0% { background: radial-gradient(circle at center, #002f4b, #002030, #000c14); }
+      100% { background: radial-gradient(circle at center, #004866, #002a3a, #00121e); }
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ================= CONTENIDO PRINCIPAL ================= */
+    header {
+      background: linear-gradient(90deg, #0a1a3f, #1e3a8a);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
+    }
+
     main {
+      padding: 40px;
       text-align: center;
-      padding: 50px 20px;
-    }
-
-    h1 {
-      color: #1e3a8a;
-    }
-
-    /* ==== FOOTER ==== */
-    footer {
-      background: #0a1a3f;
-      color: #e0f2ff;
-      text-align: center;
-      padding: 10px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 0.9rem;
     }
   </style>
 </head>
-	<header style="background-color:#0F172A; display:flex; justify-content:center; align-items:center; height:200px;">
-  <img src="assets/banner-itapyzon-e_02.png" alt="iT@pyz0n-e" style="max-height:100%; width:auto;">
-</header>
 <body>
- 
+  <!-- 🌀 SPLASH -->
+  <div id="splash-screen">
+    <img src="assets/logo_04.jpg" alt="iT@pyz0n-e" id="splash-logo">
+  </div>
 
+  <!-- 🌐 CONTENIDO PRINCIPAL -->
+  <header>📦 Inventario iT@pyz0n-e</header>
   <main>
-    <h1>Bienvenido a iT@pyz0n-e</h1>
-    <p>Comenzamos con la versión base limpia y tu logo integrado en el header.</p>
+    <h2>Bienvenido al panel principal</h2>
+    <p>Aquí cargaremos el inventario, filtros y buscadores.</p>
   </main>
 
-  <footer>
-    &copy; 2025 iT@pyz0n-e — Todos los derechos reservados.
-  </footer>
+  <script>
+    // Efecto fade-out del splash
+    window.addEventListener("load", () => {
+      const splash = document.getElementById("splash-screen");
+      setTimeout(() => {
+        splash.classList.add("fade-out");
+        setTimeout(() => splash.remove(), 1000);
+      }, 2000); // 2 segundos visible
+    });
+  </script>
 </body>
 </html>
