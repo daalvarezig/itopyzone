@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -114,7 +113,6 @@
         margin-top: 10px;
       }
     }
-
   </style>
 </head>
 
@@ -127,29 +125,23 @@
   <!-- 🔹 NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark px-4">
     <div class="container-fluid">
-
-      <!-- Logo / Nombre -->
       <a class="navbar-brand" href="#">
         <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded">
         📦 B13nven1d0 a mi D3sván
       </a>
 
-      <!-- Botón hamburguesa -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Contenido -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-
-        <!-- 🔹 Buscador centrado -->
         <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
           <input id="buscador" class="form-control me-2" type="search"
             placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
         </form>
 
-        <!-- 🔹 Botones derecha -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
           <li class="nav-item me-3">
             <button id="btn-refresh">🔄 Recargar</button>
@@ -173,207 +165,191 @@
 
   <!-- 🔹 CONTENIDO -->
   <main class="container mt-4">
-  <!-- Indicador de carga -->
-  <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
-    ⏳ Cargando inventario...
-  </div>
+    <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
+      ⏳ Cargando inventario...
+    </div>
 
-  <!-- Tabla del inventario -->
-  <div class="table-responsive">
-    <table class="table align-middle shadow-sm" style="display:none;">
-      <thead>
-        <tr>
-          <th style="width:90px;">Imagen</th>
-          <th>Nombre</th>
-          <th style="width:100px;">Precio</th>
-          <th style="width:140px;">Marca</th>
-          <th style="width:160px;">Categoría</th>
-          <th style="min-width:300px;">Descripción</th>
-          <th style="width:100px;">Estado</th>
-        </tr>
-      </thead>
-      <tbody id="contenido"></tbody>
-    </table>
-  </div>
-</main>
+    <div class="table-responsive">
+      <table class="table align-middle shadow-sm" style="display:none;">
+        <thead>
+          <tr>
+            <th style="width:90px;">Imagen</th>
+            <th>Nombre</th>
+            <th style="width:100px;">Precio</th>
+            <th style="width:140px;">Marca</th>
+            <th style="width:160px;">Categoría</th>
+            <th style="min-width:300px;">Descripción</th>
+            <th style="width:100px;">Estado</th>
+          </tr>
+        </thead>
+        <tbody id="contenido"></tbody>
+      </table>
+    </div>
+  </main>
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  // === Estado persistente ===
-  let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
-  let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
+  <!-- ====== SCRIPT UNIFICADO Y CORREGIDO ====== -->
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
+    let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
 
-  const cargando = document.getElementById("cargando");
-  const buscador = document.getElementById("buscador");
-  const tabla = document.querySelector("table");
-  const cuerpo = document.getElementById("contenido");
+    const cargando = document.getElementById("cargando");
+    const buscador = document.getElementById("buscador");
+    const tabla = document.querySelector("table");
+    const cuerpo = document.getElementById("contenido");
 
-  // === Cargar CSV ===
-  async function cargarInventario() {
-    cargando.style.display = "block";
-    cargando.textContent = "⏳ Cargando inventario...";
-    tabla.style.display = "none";
+    async function cargarInventario() {
+      cargando.style.display = "block";
+      cargando.textContent = "⏳ Cargando inventario...";
+      tabla.style.display = "none";
 
-    try {
-      const res = await fetch("inventario.csv", { cache: "no-store" });
-      if (!res.ok) throw new Error("Archivo CSV no encontrado");
-      const texto = await res.text();
+      try {
+        const res = await fetch("inventario.csv", { cache: "no-store" });
+        if (!res.ok) throw new Error("Archivo CSV no encontrado");
+        const texto = await res.text();
 
-      // Detectar separador dinámicamente (; o ,)
-      const separador = texto.includes(";") ? ";" : ",";
-      const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
-      const datos = filas.slice(1).map(linea => {
-        const partes = [];
-        let actual = "", comillas = false;
-        for (let ch of linea) {
-          if (ch === '"') comillas = !comillas;
-          else if (ch === separador && !comillas) {
-            partes.push(actual.trim());
-            actual = "";
-          } else actual += ch;
-        }
-        partes.push(actual.trim());
-        return partes;
-      });
+        const separador = texto.includes(";") ? ";" : ",";
+        const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
+        const datos = filas.slice(1).map(linea => {
+          const partes = [];
+          let actual = "", comillas = false;
+          for (let ch of linea) {
+            if (ch === '"') comillas = !comillas;
+            else if (ch === separador && !comillas) {
+              partes.push(actual.trim());
+              actual = "";
+            } else actual += ch;
+          }
+          partes.push(actual.trim());
+          return partes;
+        });
 
-      window.allData = datos;
-      mostrarTabla(datos);
-      cargando.style.display = "none";
-      tabla.style.display = "table";
-    } catch (err) {
-      console.error("Error cargando inventario:", err);
-      cargando.textContent = "⚠️ Error al cargar el inventario.";
+        window.allData = datos;
+        mostrarTabla(datos);
+        cargando.style.display = "none";
+        tabla.style.display = "table";
+      } catch (err) {
+        console.error("Error cargando inventario:", err);
+        cargando.textContent = "⚠️ Error al cargar el inventario.";
+      }
     }
-  }
 
-  // === Renderizar tabla ===
-  function mostrarTabla(datos) {
-    cuerpo.innerHTML = "";
-    datos.forEach(fila => {
-      if (fila.length < 6) return;
-      const asin = fila[0] || "";
-      const enlace = fila[1] || "";
-      const nombre = fila[2] || "(Sin nombre)";
-      const precio = fila[3] || "";
-      const marca = fila[4] || "";
-      const categoria = fila[5] || "";
-      const descripcion = fila[6] || "";
+    function mostrarTabla(datos) {
+      cuerpo.innerHTML = "";
+      datos.forEach(fila => {
+        if (fila.length < 6) return;
+        const asin = fila[0] || "";
+        const enlace = fila[1] || "";
+        const nombre = fila[2] || "(Sin nombre)";
+        const precio = fila[3] || "";
+        const marca = fila[4] || "";
+        const categoria = fila[5] || "";
+        const descripcion = fila[6] || "";
 
-      const tr = document.createElement("tr");
+        const tr = document.createElement("tr");
 
-      // 🖼 Imagen
-      const tdImg = document.createElement("td");
-      const img = document.createElement("img");
-      img.loading = "lazy";
-      img.src = `imagenes_amazon/${asin}.jpg`;
-      img.onerror = () => {
-  img.src = "assets/logo_05.png";
-  img.style.opacity = "0.6";
-  img.style.objectFit = "contain";
-};
+        const tdImg = document.createElement("td");
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.src = `imagenes_amazon/${asin}.jpg`;
+        img.onerror = () => {
+          img.src = "assets/logo_05.png";
+          img.style.opacity = "0.6";
+          img.style.objectFit = "contain";
+        };
+        tdImg.appendChild(img);
 
-      tdImg.appendChild(img);
+        const tdNombre = document.createElement("td");
+        const a = document.createElement("a");
+        a.href = enlace || "#";
+        a.target = "_blank";
+        a.classList.add("nombre-link");
+        a.textContent = nombre;
+        tdNombre.appendChild(a);
 
-      // 🔗 Nombre con enlace
-      const tdNombre = document.createElement("td");
-      const a = document.createElement("a");
-      a.href = enlace || "#";
-      a.target = "_blank";
-      a.classList.add("nombre-link");
-      a.textContent = nombre;
-      tdNombre.appendChild(a);
+        const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
+        const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
+        const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
+        const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
 
-      const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
-      const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
-      const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
-      const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
+        const tdEstado = document.createElement("td");
+        const estadoBtn = document.createElement("button");
+        estadoBtn.classList.add("estado-btn");
+        estadoBtn.style.border = "none";
+        estadoBtn.style.background = "none";
+        estadoBtn.style.cursor = "pointer";
+        estadoBtn.style.fontSize = "20px";
+        estadoBtn.title = "Cambiar estado";
 
-      // 🟢🟡🔴 Estado
-      const tdEstado = document.createElement("td");
-      const estadoBtn = document.createElement("button");
-      estadoBtn.classList.add("estado-btn");
-      estadoBtn.style.border = "none";
-      estadoBtn.style.background = "none";
-      estadoBtn.style.cursor = "pointer";
-      estadoBtn.style.fontSize = "20px";
-      estadoBtn.title = "Cambiar estado";
+        const estados = [
+          { emoji: "🟢", texto: "Disponible" },
+          { emoji: "🟡", texto: "Reservado" },
+          { emoji: "🔴", texto: "Vendido" }
+        ];
 
-      const estados = [
-        { emoji: "🟢", texto: "Disponible" },
-        { emoji: "🟡", texto: "Reservado" },
-        { emoji: "🔴", texto: "Vendido" }
-      ];
-
-      let estadoActual = (estadoProductos[asin] !== undefined) ? estadoProductos[asin] : 1;
-      estadoBtn.textContent = estados[estadoActual].emoji;
-      estadoBtn.title = estados[estadoActual].texto;
-      estadoBtn.setAttribute("data-estado", estadoActual);
-
-      estadoBtn.addEventListener("click", () => {
-        estadoActual = (estadoActual + 1) % estados.length;
-        estadoProductos[asin] = estadoActual;
+        let estadoActual = (estadoProductos[asin] !== undefined) ? estadoProductos[asin] : 1;
         estadoBtn.textContent = estados[estadoActual].emoji;
         estadoBtn.title = estados[estadoActual].texto;
         estadoBtn.setAttribute("data-estado", estadoActual);
-        localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
+
+        estadoBtn.addEventListener("click", () => {
+          estadoActual = (estadoActual + 1) % estados.length;
+          estadoProductos[asin] = estadoActual;
+          estadoBtn.textContent = estados[estadoActual].emoji;
+          estadoBtn.title = estados[estadoActual].texto;
+          estadoBtn.setAttribute("data-estado", estadoActual);
+          localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
+        });
+
+        tdEstado.appendChild(estadoBtn);
+        tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
+        cuerpo.appendChild(tr);
       });
+    }
 
-      tdEstado.appendChild(estadoBtn);
-      tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
-      cuerpo.appendChild(tr);
+    function aplicarFiltros() {
+      const texto = buscador.value.toLowerCase();
+      const filtroEstado = filtroActivo;
+      const filtrados = window.allData.filter(f => {
+        const asin = f[0];
+        const textoCoincide = f.join(" ").toLowerCase().includes(texto);
+        const estado = estadoProductos[asin] ?? 1;
+        if (filtroEstado === "todos") return textoCoincide;
+        return textoCoincide && parseInt(filtroEstado) === estado;
+      });
+      mostrarTabla(filtrados);
+    }
+
+    document.getElementById("btn-refresh").addEventListener("click", async () => {
+      localStorage.clear();
+      estadoProductos = {};
+      filtroActivo = "todos";
+      await cargarInventario();
     });
-  }
 
-  // === Filtrar ===
-  function aplicarFiltros() {
-    const texto = buscador.value.toLowerCase();
-    const filtroEstado = filtroActivo;
-    const filtrados = window.allData.filter(f => {
-      const asin = f[0];
-      const textoCoincide = f.join(" ").toLowerCase().includes(texto);
-      const estado = estadoProductos[asin] ?? 1;
-      if (filtroEstado === "todos") return textoCoincide;
-      return textoCoincide && parseInt(filtroEstado) === estado;
+    buscador.addEventListener("input", aplicarFiltros);
+
+    document.querySelectorAll(".filter-option").forEach(opt => {
+      opt.addEventListener("click", e => {
+        e.preventDefault();
+        const filtro = e.target.getAttribute("data-filter");
+        filtroActivo = filtro;
+        localStorage.setItem("filtroActivo", filtro);
+        aplicarFiltros();
+      });
     });
-    mostrarTabla(filtrados);
-  }
 
-  // === Eventos ===
-  document.getElementById("btn-refresh").addEventListener("click", async () => {
-    localStorage.clear();
-    estadoProductos = {};
-    filtroActivo = "todos";
     await cargarInventario();
   });
 
-  buscador.addEventListener("input", aplicarFiltros);
-
-  document.querySelectorAll(".filter-option").forEach(opt => {
-    opt.addEventListener("click", e => {
-      e.preventDefault();
-      const filtro = e.target.getAttribute("data-filter");
-      filtroActivo = filtro;
-      localStorage.setItem("filtroActivo", filtro);
-      aplicarFiltros();
-    });
+  // 🎬 SPLASH DESAPARECE
+  window.addEventListener("load", () => {
+    const splash = document.getElementById("splash-screen");
+    setTimeout(() => {
+      splash.classList.add("fade-out");
+      setTimeout(() => splash.remove(), 1000);
+    }, 2000);
   });
-
-  // === Inicialización ===
-  await cargarInventario();
-});
-</script>
-
-</script>
-
-<script>
-    // 🎬 SPLASH desaparece tras 2s
-    window.addEventListener("load", () => {
-      const splash = document.getElementById("splash-screen");
-      setTimeout(() => {
-        splash.classList.add("fade-out");
-        setTimeout(() => splash.remove(), 1000);
-      }, 2000);
-    });
   </script>
 </body>
 </html>
