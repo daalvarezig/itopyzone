@@ -12,7 +12,7 @@
   <style>
     body {
       background: radial-gradient(circle at center, #001a29, #000913);
-      color: #cdefff;
+      color: #cde9f7; /* 🔹 tono celeste suave y legible */
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
       padding: 3rem 1rem;
@@ -20,37 +20,24 @@
 
     h1 {
       color: #00e0ff;
-      text-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
-      margin-bottom: 1rem;
+      text-shadow: 0 0 12px rgba(0,224,255,0.7);
+      margin-bottom: 1.2rem;
     }
 
     .card {
-      background: rgba(0, 20, 40, 0.7);
-      border: 1px solid rgba(0, 224, 255, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(0,224,255,0.35);
       border-radius: 18px;
-      box-shadow: 0 0 20px rgba(0, 224, 255, 0.25);
+      box-shadow: 0 0 25px rgba(0,224,255,0.15);
       margin: 0 auto;
       max-width: 520px;
       padding: 2rem;
-      color: #e6faff;
     }
 
-    p {
-      color: #d0f4ff;
-      line-height: 1.6;
+    .card p, .card li {
+      color: #e9f8ff;
       font-size: 1rem;
-    }
-
-    ul {
-      margin-top: 1rem;
-      color: #b5e8ff;
-      text-align: left;
-      display: inline-block;
-    }
-
-    ul li {
-      margin-bottom: 6px;
-      font-size: 1.05rem;
+      line-height: 1.5;
     }
 
     .btn-telegram {
@@ -61,9 +48,61 @@
       padding: 12px 28px;
       font-size: 1.1rem;
       transition: 0.3s;
-      box-shadow: 0 0 12px rgba(0, 224, 255, 0.4);
     }
 
     .btn-telegram:hover {
-      transform: scale(1.06);
-     
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,224,255,0.5);
+    }
+
+    ul {
+      padding-left: 0;
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    ul li {
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #7cdfff;
+      letter-spacing: 0.5px;
+    }
+
+    img.logo {
+      max-width: 220px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,224,255,0.4);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="assets/logo_07.png" alt="iT@pyz0n-e" class="logo">
+
+  <h1>🤖 iT@pyz0n-e Bot</h1>
+
+  <div class="card">
+    <p>Tu asistente digital para <b>consultar productos</b>, <b>gestionar inventario</b> y <b>recibir soporte directo</b>.</p>
+    <p>Disponible 24/7 desde Telegram.</p>
+
+    <a href="https://t.me/iTopyzone_bot" target="_blank" class="btn btn-telegram">
+      💬 Hablar con iT@pyz0n-e Bot
+    </a>
+
+    <hr class="my-4 text-light">
+    <p class="mb-1">📘 <b>Comandos disponibles:</b></p>
+    <ul>
+      <li>🔍 <b>/buscar</b> – Encuentra productos por nombre o marca</li>
+      <li>🏁 <b>/start</b> – Reinicia el bot</li>
+    </ul>
+  </div>
+
+  <footer>© 2025 iT@pyz0n-e — “Tecnología, análisis y compromiso profesional”</footer>
+</body>
+</html>
