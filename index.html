@@ -299,7 +299,6 @@
             img.style.width = "80px";
             img.style.height = "80px";
           };
-
           tdImg.appendChild(img);
 
           const tdNombre = document.createElement("td");
@@ -350,19 +349,55 @@
         });
       }
 
+      // 🔎 BÚSQUEDA MEJORADA MULTIPALABRA + “MOSTRAR MÁS” + MENSAJES
       function aplicarFiltros() {
-        const texto = buscador.value.toLowerCase();
+        const texto = buscador.value.toLowerCase().trim();
+        const palabras = texto.split(/\s+/).filter(p => p.length > 0);
         const filtroEstado = filtroActivo;
+
         const filtrados = window.allData.filter(f => {
           const asin = f[0];
-          const textoCoincide = f.join(" ").toLowerCase().includes(texto);
+          const textoProducto = f.join(" ").toLowerCase();
+          const coincide = palabras.every(p => textoProducto.includes(p));
           const estado = estadoProductos[asin] ?? 1;
-          if (filtroEstado === "todos") return textoCoincide;
-          return textoCoincide && parseInt(filtroEstado) === estado;
+          if (filtroEstado === "todos") return coincide;
+          return coincide && parseInt(filtroEstado) === estado;
         });
-        mostrarTabla(filtrados);
+
+        cuerpo.innerHTML = "";
+
+        if (filtrados.length === 0) {
+          cuerpo.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center text-muted py-4">
+            ⚠️ No se encontró ningún producto con esas palabras.
+          </td>
+        </tr>`;
+          return;
+        }
+
+        const limite = 10;
+        const mostrar = filtrados.slice(0, limite);
+        mostrarTabla(mostrar);
+
+        if (filtrados.length > limite) {
+          const filaExtra = document.createElement("tr");
+          filaExtra.innerHTML = `
+        <td colspan="7" class="text-center py-3">
+          🔍 Se encontraron <b>${filtrados.length}</b> resultados.<br>
+          <button id="btn-mostrar-mas" class="btn btn-outline-info mt-2">
+            ➕ Mostrar más
+          </button>
+        </td>`;
+          cuerpo.appendChild(filaExtra);
+
+          document.getElementById("btn-mostrar-mas").addEventListener("click", () => {
+            mostrarTabla(filtrados);
+          });
+        }
       }
 
+      // 🔁 BOTÓN RECARGAR
       document.getElementById("btn-refresh").addEventListener("click", async () => {
         localStorage.clear();
         estadoProductos = {};
@@ -370,6 +405,7 @@
         await cargarInventario();
       });
 
+      // 🧭 BUSCADOR Y FILTROS
       buscador.addEventListener("input", aplicarFiltros);
 
       document.querySelectorAll(".filter-option").forEach(opt => {
@@ -394,6 +430,7 @@
       }, 2000);
     });
   </script>
+
 </body>
 
 </html>
