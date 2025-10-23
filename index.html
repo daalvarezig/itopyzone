@@ -149,59 +149,50 @@
   </div>
 
   <!-- 🔹 NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, #00173a, #002b6b);">
-    <div class="container-fluid d-flex align-items-center justify-content-between  flex-nowrap">
-      <div class="d-flex align-items-center flex-shrink-1 text-nowrap">
-        <a class="navbar-brand d-flex align-items-center me-2" href="#">
-          <img src="assets/logo_05.png" alt="Logo" class="rounded" style="height: 45px;">
-          <p class="display-6 fw-bold text-nowrap m-0 d-flex align-items-center" style="gap:0.5rem; line-height:1;">
-            <span style="font-size:2rem; line-height:0.8;">📦</span>
-            <span style="color:#00E0FF; text-shadow:0 0 8px #00E0FF;">
-              B13nven1d0<span class="d-inline d-sm-none"><br></span>
-              <span style="color:#00E0FF">a mi D3sván</span>
-            </span>
-          </p>
+<nav class="navbar navbar-expand-lg navbar-dark px-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="assets/logo_07.png" alt="Logo" class="me-2 rounded">
+      📦 B13nven1d0 a mi D3sván
+    </a>
 
-        </a>
-      </div>
-      <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation" style="outline:none;">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-        <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
-          <input id="buscador" class="form-control me-2" type="search"
-            placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
-        </form>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
+        <input id="buscador" class="form-control me-2" type="search"
+          placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
+      </form>
 
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-          <li class="nav-item me-3">
-            <button id="btn-refresh">🔄 Recargar</button>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <i class="bi bi-gear-fill settings-icon"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
-            </ul>
-          </li>
-          </li>
-          <li class="nav-item">
-            <a href="bot.html" class="nav-link text-info fw-bold">
-              🤖 Bot iT@pyz0n-e
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item me-3">
+          <button id="btn-refresh">🔄 Recargar</button>
+        </li>
+        <li class="nav-item me-3">
+          <a href="https://wa.me/34644935856" target="_blank" class="btn btn-success">
+            💬 WhatsApp
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="bi bi-gear-fill settings-icon"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
+            <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
+            <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
+            <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- 🔹 CONTENIDO -->
   <main class="container mt-4">
