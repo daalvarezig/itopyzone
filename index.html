@@ -197,17 +197,17 @@
 
 <!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
 <a href="https://t.me/iTopyzone_bot"
-   class="telegram-float"
+   class="telegram-float-top"
    target="_blank"
    title="Habla con mi bot en Telegram">
   <i class="bi bi-telegram"></i>
 </a>
 
 <style>
-.telegram-float {
+.telegram-float-top {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  top: 95px;
+  right: 25px;
   background: linear-gradient(90deg, #007BFF, #00E0FF);
   color: white;
   font-size: 26px;
@@ -221,10 +221,20 @@
   transition: all 0.3s ease;
   z-index: 999;
 }
-.telegram-float:hover {
+.telegram-float-top:hover {
   transform: scale(1.1);
   box-shadow: 0 0 18px rgba(0,0,0,0.35);
 }
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.telegram-float-top {
+  animation: floatBounce 2.5s ease-in-out infinite;
+}
+
 </style>
 
 
