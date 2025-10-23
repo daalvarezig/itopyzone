@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📅 Timeline iT@pyz0n-e — Venta Wallapop 1 DIC</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: radial-gradient(circle at top, #00111f 0%, #000 90%);
+  color: #e0f7ff;
+  font-family: "Segoe UI", sans-serif;
+  padding: 30px 10px 80px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+h1 {
+  text-align: center;
+  color: #00e0ff;
+  text-shadow: 0 0 12px #00e0ff;
+  margin-bottom: 40px;
+  animation: titlePulse 3s infinite ease-in-out;
+}
+@keyframes titlePulse {
+  0%, 100% { text-shadow: 0 0 12px #00e0ff; }
+  50% { text-shadow: 0 0 28px #21ee0e; }
+}
+.card {
+  background: rgba(0, 15, 25, 0.9);
+  border: 1px solid #00e0ff33;
+  border-radius: 16px;
+  box-shadow: 0 0 20px #00e0ff22;
+  color: #cfefff;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px #00e0ff55;
+}
+.card h5 {
+  color: #00e0ff;
+}
+.progress {
+  height: 12px;
+  background: #082032;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px #00e0ff33;
+}
+.progress-bar {
+  background: linear-gradient(90deg, #00e0ff, #21ee0e);
+  box-shadow: 0 0 12px #00e0ff;
+  transition: width 0.6s ease;
+  animation: neonPulse 2s infinite ease-in-out;
+}
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 12px #00e0ff; }
+  50% { box-shadow: 0 0 25px #21ee0e; }
+}
+button {
+  background: linear-gradient(90deg, #007bff, #00e0ff);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 10px #00e0ff77;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.9rem;
+  color: #00e0ffaa;
+  text-shadow: 0 0 6px #00e0ff;
+}
+</style>
+</head>
+
+<body>
+<h1>📅 Plan Maestro iT@pyz0n-e — Venta Wallapop 1 DIC</h1>
+
+<div class="container">
+  <div id="tareas"></div>
+</div>
+
+<footer>© 2025 iT@pyz0n-e — “Tecnología, análisis y compromiso profesional”</footer>
+
+<script>
+const tareas = [
+  { semana: "Semana 1 (23–29 Oct)", titulo: "🧩 Fundación técnica — estructura Flask, GitHub y SQLite", progreso: 100 },
+  { semana: "Semana 2 (30 Oct–5 Nov)", titulo: "🤖 Integración bot Telegram y buscador SQL", progreso: 100 },
+  { semana: "Semana 3 (6–12 Nov)", titulo: "🌐 Web avanzada + búsqueda multipalabra + contactos", progreso: 100 },
+  { semana: "Semana 4 (13–19 Nov)", titulo: "📊 Responsive + contador visitas + clics en botones", progreso: 70 },
+  { semana: "Semana 5 (20–26 Nov)", titulo: "🧾 Formulario clientes y CSV de ventas", progreso: 20 },
+  { semana: "Semana 6 (27 Nov–1 Dic)", titulo: "🎯 Lanzamiento oficial Wallapop 1 DIC", progreso: 0 }
+];
+
+const cont = document.getElementById("tareas");
+
+tareas.forEach((t, i) => {
+  const card = document.createElement("div");
+  card.className = "card p-3";
+
+  const head = document.createElement("h5");
+  head.textContent = t.semana;
+
+  const body = document.createElement("p");
+  body.textContent = t.titulo;
+
+  const progress = document.createElement("div");
+  progress.className = "progress mt-2";
+  const bar = document.createElement("div");
+  bar.className = "progress-bar";
+  bar.style.width = t.progreso + "%";
+  progress.appendChild(bar);
+
+  const btn = document.createElement("button");
+  btn.textContent = "Actualizar";
+  btn.addEventListener("click", () => {
+    t.progreso = Math.min(t.progreso + 20, 100);
+    bar.style.width = t.progreso + "%";
+    if (t.progreso === 100) btn.disabled = true;
+  });
+
+  card.append(head, body, progress, btn);
+  cont.appendChild(card);
+});
+</script>
+</body>
+</html>
