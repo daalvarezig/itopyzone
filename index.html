@@ -20,69 +20,48 @@
     </div>
 
     <!-- 🔹 NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark px-4">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <div class="logo-box me-2" data-bs-toggle="modal" data-bs-target="#timelineModal">
-                    <img src="assets/logo_05.png" alt="Logo" class="rounded neon-logo">
-                </div>
+    <nav class="navbar navbar-dark px-4">
+        <div class="container-fluid d-flex justify-content-center align-items-center position-relative">
 
-                <div class="icon-box me-2">📦</div>
-
-                <div class="brand-text">
-                    <span class="brand-line1">B13nven1d0</span><br>
-                    <span class="brand-line2">a mi D3sván</span>
-                </div>
-            </a>
-
-
+        </div>
+        <!-- 🔹 TÍTULO CENTRAL -->
+        <span class="navbar-brand m-0 text-center text-nowrap">
+            <h4>📦 B13nv3n1d0 a mi D3sván</h4>
+        </span>
+        <!-- 👇 BOTÓN MENÚ INTERACTIVO -->
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Alternar navegación">
+            👇
+        </button>
 
 
-            <!-- 👇 BOTÓN MENÚ INTERACTIVO -->
-            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Alternar navegación">
-                👇
-            </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <form class="d-flex search-bar align-items-center" role="search" onsubmit="event.preventDefault();">
+                <input id="buscador" class="form-control me-2" type="search" placeholder="🔍 Escanea o busca..."
+                    aria-label="Buscar">
+            </form>
 
 
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <form class="d-flex search-bar align-items-center" role="search" onsubmit="event.preventDefault();">
-                    <input id="buscador" class="form-control me-2" type="search" placeholder="🔍 Escanea o busca..."
-                        aria-label="Buscar">
-                    <button id="btn-scan" type="button" class="btn btn-outline-info">
-                        📷 Escanear
-                    </button>
-                </form>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
 
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item me-3">
-                        <button id="btn-refresh">🔄 Recargar</button>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="bi bi-gear-fill settings-icon"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
-                            <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-gear-fill settings-icon"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
+                        <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
+                        <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
+                        <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
         </div>
     </nav>
 
-    <!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
-    <a href="https://t.me/iTopyzone_bot" class="telegram-float-top" target="_blank"
-        title="Habla con mi bot en Telegram">
-        <i class="bi bi-telegram"></i>
-    </a>
 
     <!-- 🔹 CONTENIDO -->
     <main class="container mt-4">
@@ -296,14 +275,6 @@
                 }
             }
 
-            // 🔁 RECARGAR INVENTARIO
-            document.getElementById("btn-refresh").addEventListener("click", async () => {
-                localStorage.clear();
-                estadoProductos = {};
-                filtroActivo = "todos";
-                await cargarInventario();
-            });
-
             buscador.addEventListener("input", aplicarFiltros);
 
             document.querySelectorAll(".filter-option").forEach(opt => {
@@ -369,11 +340,18 @@ background:#000; padding:10px; border-radius:10px; z-index:9999;"></div>
             }
         }
     </script>
-    <!-- 🟢 BURBUJA FLOTANTE — WHATSAPP -->
-    <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
-        class="float-top-whatsapp" target="_blank" title="Contactar por WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
+    <!-- 💬 BOTONES DE CONTACTO LATERALES -->
+    <div class="contact-bar">
+        <a href="https://t.me/iTopyzone_bot" target="_blank" class="contact-btn telegram"
+            title="Habla con mi bot en Telegram">
+            <i class="bi bi-telegram"></i>
+        </a>
+
+        <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
+            target="_blank" class="contact-btn whatsapp" title="Contactar por WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    </div>
 
 </body>
 
