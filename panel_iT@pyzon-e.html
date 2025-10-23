@@ -188,7 +188,7 @@ tareas.forEach((t, i) => {
   <i class="bi bi-graph-up"></i>
 </a>
 
-<!-- MODAL INFORME DE PROGRESO -->
+<!-- MODAL INFORME DE PROGRESO (versión GitHub Pages) -->
 <div class="modal fade neon-fade" id="informeModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content bg-dark border-info neon-border">
@@ -199,8 +199,14 @@ tareas.forEach((t, i) => {
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body p-0">
-        <iframe src="informe_progreso_itopyzone_231025.html"
-                style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
+
+        <!-- 🌐 IFRAME directo al informe alojado en GitHub Pages -->
+        <iframe 
+          src="https://daalvarezig.github.io/itopyzone/informe_progreso_itopyzone_231025.html"
+          style="width:100%; height:80vh; border:none; border-radius:8px;"
+          loading="lazy">
+        </iframe>
+
       </div>
     </div>
   </div>
