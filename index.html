@@ -148,94 +148,101 @@
     <img src="assets/logo_04.jpg" alt="iT@pyz0n-e" id="splash-logo">
   </div>
 
-<!-- 🔹 NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark px-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded">
-      📦 B13nven1d0 a mi D3sván
-    </a>
+  <!-- 🔹 NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark px-4">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded neon-logo" style="cursor:pointer;"
+          data-bs-toggle="modal" data-bs-target="#timelineModal">
+        📦 B13nven1d0 a mi D3sván
+      </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-      <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
-        <input id="buscador" class="form-control me-2" type="search"
-          placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
-      </form>
 
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-        <li class="nav-item me-3">
-          <button id="btn-refresh">🔄 Recargar</button>
-        </li>
-        <li class="nav-item me-3">
-          <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!" 
-             target="_blank" class="btn btn-success">
-            💬 WhatsApp
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="bi bi-gear-fill settings-icon"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
-            <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
-            <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
-            <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
-          </ul>
-        </li>
-      </ul>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
+          <input id="buscador" class="form-control me-2" type="search"
+            placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
+        </form>
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item me-3">
+            <button id="btn-refresh">🔄 Recargar</button>
+          </li>
+          <li class="nav-item me-3">
+            <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
+              target="_blank" class="btn btn-success">
+              💬 WhatsApp
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-gear-fill settings-icon"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
+              <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
+              <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
+              <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
-<a href="https://t.me/iTopyzone_bot"
-   class="telegram-float-top"
-   target="_blank"
-   title="Habla con mi bot en Telegram">
-  <i class="bi bi-telegram"></i>
-</a>
+  <!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
+  <a href="https://t.me/iTopyzone_bot" class="telegram-float-top" target="_blank" title="Habla con mi bot en Telegram">
+    <i class="bi bi-telegram"></i>
+  </a>
 
-<style>
-.telegram-float-top {
-  position: fixed;
-  top: 95px;
-  right: 25px;
-  background: linear-gradient(90deg, #007BFF, #00E0FF);
-  color: white;
-  font-size: 26px;
-  border-radius: 50%;
-  width: 58px;
-  height: 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 12px rgba(0,0,0,0.25);
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-.telegram-float-top:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 18px rgba(0,0,0,0.35);
-}
+  <style>
+    .telegram-float-top {
+      position: fixed;
+      top: 95px;
+      right: 25px;
+      background: linear-gradient(90deg, #007BFF, #00E0FF);
+      color: white;
+      font-size: 26px;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
 
-@keyframes floatBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
+    .telegram-float-top:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+    }
 
-.telegram-float-top {
-  animation: floatBounce 2.5s ease-in-out infinite;
-}
+    @keyframes floatBounce {
 
-</style>
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .telegram-float-top {
+      animation: floatBounce 2.5s ease-in-out infinite;
+    }
+  </style>
 
 
   <!-- 🔹 CONTENIDO -->
@@ -465,9 +472,77 @@
       }, 2000);
     });
   </script>
+  </style>
+  <!-- MODAL TIMELINE -->
+  <div class="modal fade neon-fade" id="timelineModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark border-info neon-border">
+        <div class="modal-header border-info">
+          <h5 class="modal-title text-info">
+            ⏳ Timeline iT@pyz0n-e — Venta Wallapop 1 DIC
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <iframe src="panel_iT@pyzon-e.html" style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 
- 
-</style>
+  <!-- EFECTOS -->
+  <style>
+    .neon-fade .modal-dialog {
+      animation: neonFadeIn 0.6s ease forwards;
+    }
+
+    @keyframes neonFadeIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(0, 224, 255, 0);
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 25px rgba(0, 224, 255, 0.3);
+      }
+    }
+
+    .neon-border {
+      box-shadow: 0 0 20px rgba(0, 224, 255, 0.25), inset 0 0 10px rgba(0, 224, 255, 0.15);
+      border: 1px solid rgba(0, 224, 255, 0.4);
+      transition: box-shadow 0.5s ease;
+    }
+
+    .neon-border:hover {
+      box-shadow: 0 0 30px rgba(0, 224, 255, 0.4), inset 0 0 15px rgba(0, 224, 255, 0.25);
+    }
+
+    /* Destello en logo */
+    .neon-logo:active {
+      animation: logoFlash 0.4s ease;
+    }
+
+    @keyframes logoFlash {
+      0% {
+        filter: drop-shadow(0 0 0px #00e0ff);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px #00e0ff) brightness(1.6);
+        transform: scale(1.1);
+      }
+
+      100% {
+        filter: drop-shadow(0 0 0px #00e0ff);
+        transform: scale(1);
+      }
+    }
+  </style>
+
+
 
 
 </body>
