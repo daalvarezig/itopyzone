@@ -208,3 +208,94 @@ table img {
     right: 15px !important;
   }
 }
+/* ===== 1️⃣2️⃣ AJUSTE PERFECTO DE LOGO + ICONO + TEXTO ===== */
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.logo-box:hover {
+  transform: scale(1.05);
+}
+
+.icon-box {
+  font-size: 1.6rem;
+  margin-right: 6px;
+  margin-top: 1px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1; /* línea base más compacta */
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+}
+
+.brand-line1,
+.brand-line2 {
+  color: #00E0FF;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
+  line-height: 1; /* refuerzo extra */
+}
+
+/* Primera línea */
+.brand-line1 {
+  font-size: 1.4rem;
+}
+
+/* Segunda línea */
+.brand-line2 {
+  font-size: 1.1rem;
+  margin-top: -2px; /* se acerca a la primera línea */
+}
+
+/* ===== 📱 Responsive ===== */
+@media (max-width: 768px) {
+  .logo-box {
+    width: 55px;
+    height: 55px;
+  }
+
+  .icon-box {
+    font-size: 1.3rem;
+    margin-top: 0;
+  }
+
+  .brand-line1 {
+    font-size: 1.1rem;
+  }
+
+  .brand-line2 {
+    font-size: 0.95rem;
+    margin-top: -4px; /* reduce aún más el hueco */
+  }
+
+  .brand-text {
+    line-height: 0.95;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-line1 {
+    font-size: 1rem;
+  }
+
+  .brand-line2 {
+    font-size: 0.9rem;
+    margin-top: -5px;
+  }
+
+  .brand-text {
+    line-height: 0.9;
+  }
+}

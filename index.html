@@ -2,316 +2,375 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iT@pyz0n-e</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iT@pyz0n-e</title>
 
-  <!-- Bootstrap y estilos externos -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/styles.css">
+    <!-- Bootstrap y estilos externos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 
 <body>
-  <!-- 🌀 SPLASH -->
-  <div id="splash-screen">
-    <img src="assets/logo_04.jpg" alt="iT@pyz0n-e" id="splash-logo">
-  </div>
+    <!-- 🌀 SPLASH -->
+    <div id="splash-screen">
+        <img src="assets/logo_04.jpg" alt="iT@pyz0n-e" id="splash-logo">
+    </div>
 
-  <!-- 🔹 NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark px-4">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded neon-logo" data-bs-toggle="modal" data-bs-target="#timelineModal">
-        📦 B13nven1d0 <span>a mi D3sván</span>
-      </a>
+    <!-- 🔹 NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="logo-box me-2" data-bs-toggle="modal" data-bs-target="#timelineModal">
+                    <img src="assets/logo_05.png" alt="Logo" class="rounded neon-logo">
+                </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+                <div class="icon-box me-2">📦</div>
 
-      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-        <form class="d-flex search-bar" role="search" onsubmit="event.preventDefault();">
-          <input id="buscador" class="form-control me-2" type="search"
-            placeholder="Buscar por nombre o palabra clave..." aria-label="Buscar">
-        </form>
-
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-          <li class="nav-item me-3">
-            <button id="btn-refresh">🔄 Recargar</button>
-          </li>
-          <li class="nav-item me-3">
-            <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
-              target="_blank" class="btn btn-success">
-              💬 WhatsApp
+                <div class="brand-text">
+                    <span class="brand-line1">B13nven1d0</span><br>
+                    <span class="brand-line2">a mi D3sván</span>
+                </div>
             </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <i class="bi bi-gear-fill settings-icon"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
-              <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
-  <a href="https://t.me/iTopyzone_bot" class="telegram-float-top" target="_blank" title="Habla con mi bot en Telegram">
-    <i class="bi bi-telegram"></i>
-  </a>
 
-  <!-- 🔹 CONTENIDO -->
-  <main class="container mt-4">
-    <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
-      ⏳ Cargando inventario...
-    </div>
 
-    <div class="table-responsive">
-      <table class="table align-middle shadow-sm" style="display:none;">
-        <thead>
-          <tr>
-            <th style="width:90px;">Imagen</th>
-            <th>Nombre</th>
-            <th style="width:100px;">Precio</th>
-            <th style="width:140px;">Marca</th>
-            <th style="width:160px;">Categoría</th>
-            <th style="min-width:300px;">Descripción</th>
-            <th style="width:100px;">Estado</th>
-          </tr>
-        </thead>
-        <tbody id="contenido"></tbody>
-      </table>
-    </div>
-  </main>
 
-  <!-- 🔹 MODAL TIMELINE -->
-  <div class="modal fade neon-fade" id="timelineModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content bg-dark border-info neon-border">
-        <div class="modal-header border-info">
-          <h5 class="modal-title text-info">
-            ⏳ Timeline iT@pyz0n-e — Venta Wallapop 1 DIC
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <form class="d-flex search-bar align-items-center" role="search" onsubmit="event.preventDefault();">
+                    <input id="buscador" class="form-control me-2" type="search" placeholder="🔍 Escanea o busca..."
+                        aria-label="Buscar">
+                    <button id="btn-scan" type="button" class="btn btn-outline-info">
+                        📷 Escanear
+                    </button>
+                </form>
+
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item me-3">
+                        <button id="btn-refresh">🔄 Recargar</button>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
+                            target="_blank" class="btn btn-success">
+                            💬 WhatsApp
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-gear-fill settings-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item filter-option" href="#" data-filter="todos">Ver todos</a></li>
+                            <li><a class="dropdown-item filter-option" href="#" data-filter="0">🟢 Disponibles</a></li>
+                            <li><a class="dropdown-item filter-option" href="#" data-filter="1">🟡 Reservados</a></li>
+                            <li><a class="dropdown-item filter-option" href="#" data-filter="2">🔴 Vendidos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="modal-body p-0">
-          <iframe src="panel_iT@pyzon-e.html" style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
+    </nav>
+
+    <!-- 🤖 BOTÓN FLOTANTE TELEGRAM -->
+    <a href="https://t.me/iTopyzone_bot" class="telegram-float-top" target="_blank"
+        title="Habla con mi bot en Telegram">
+        <i class="bi bi-telegram"></i>
+    </a>
+
+    <!-- 🔹 CONTENIDO -->
+    <main class="container mt-4">
+        <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
+            ⏳ Cargando inventario...
         </div>
-      </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle shadow-sm" style="display:none;">
+                <thead>
+                    <tr>
+                        <th style="width:90px;">Imagen</th>
+                        <th>Nombre</th>
+                        <th style="width:100px;">Precio</th>
+                        <th style="width:140px;">Marca</th>
+                        <th style="width:160px;">Categoría</th>
+                        <th style="min-width:300px;">Descripción</th>
+                        <th style="width:100px;">Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="contenido"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- 🔹 MODAL TIMELINE -->
+    <div class="modal fade neon-fade" id="timelineModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-dark border-info neon-border">
+                <div class="modal-header border-info">
+                    <h5 class="modal-title text-info">
+                        ⏳ Timeline iT@pyz0n-e — Venta Wallapop 1 DIC
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe src="panel_iT@pyzon-e.html"
+                        style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- ====== SCRIPT PRINCIPAL ====== -->
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
-      let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
+    <!-- ====== SCRIPT PRINCIPAL ====== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
+            let filtroActivo = localStorage.getItem("filtroActivo") || "todos";
 
-      const cargando = document.getElementById("cargando");
-      const buscador = document.getElementById("buscador");
-      const tabla = document.querySelector("table");
-      const cuerpo = document.getElementById("contenido");
+            const cargando = document.getElementById("cargando");
+            const buscador = document.getElementById("buscador");
+            const tabla = document.querySelector("table");
+            const cuerpo = document.getElementById("contenido");
 
-      async function cargarInventario() {
-        cargando.style.display = "block";
-        cargando.textContent = "⏳ Cargando inventario...";
-        tabla.style.display = "none";
+            async function cargarInventario() {
+                cargando.style.display = "block";
+                cargando.textContent = "⏳ Cargando inventario...";
+                tabla.style.display = "none";
 
-        try {
-          const res = await fetch("inventario.csv", { cache: "no-store" });
-          if (!res.ok) throw new Error("Archivo CSV no encontrado");
-          const texto = await res.text();
+                try {
+                    const res = await fetch("inventario.csv", { cache: "no-store" });
+                    if (!res.ok) throw new Error("Archivo CSV no encontrado");
+                    const texto = await res.text();
 
-          const separador = texto.includes(";") ? ";" : ",";
-          const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
-          const datos = filas.slice(1).map(linea => {
-            const partes = [];
-            let actual = "", comillas = false;
-            for (let ch of linea) {
-              if (ch === '"') comillas = !comillas;
-              else if (ch === separador && !comillas) {
-                partes.push(actual.trim());
-                actual = "";
-              } else actual += ch;
+                    const separador = texto.includes(";") ? ";" : ",";
+                    const filas = texto.split(/\r?\n/).filter(l => l.trim() !== "");
+                    const datos = filas.slice(1).map(linea => {
+                        const partes = [];
+                        let actual = "", comillas = false;
+                        for (let ch of linea) {
+                            if (ch === '"') comillas = !comillas;
+                            else if (ch === separador && !comillas) {
+                                partes.push(actual.trim());
+                                actual = "";
+                            } else actual += ch;
+                        }
+                        partes.push(actual.trim());
+                        return partes;
+                    });
+
+                    window.allData = datos;
+                    mostrarTabla(datos);
+                    cargando.style.display = "none";
+                    tabla.style.display = "table";
+                } catch (err) {
+                    console.error("Error cargando inventario:", err);
+                    cargando.textContent = "⚠️ Error al cargar el inventario.";
+                }
             }
-            partes.push(actual.trim());
-            return partes;
-          });
 
-          window.allData = datos;
-          mostrarTabla(datos);
-          cargando.style.display = "none";
-          tabla.style.display = "table";
-        } catch (err) {
-          console.error("Error cargando inventario:", err);
-          cargando.textContent = "⚠️ Error al cargar el inventario.";
-        }
-      }
+            function mostrarTabla(datos) {
+                cuerpo.innerHTML = "";
+                datos.forEach(fila => {
+                    if (fila.length < 6) return;
+                    const asin = fila[0] || "";
+                    const enlace = fila[1] || "";
+                    const nombre = fila[2] || "(Sin nombre)";
+                    const precio = fila[3] || "";
+                    const marca = fila[4] || "";
+                    const categoria = fila[5] || "";
+                    const descripcion = fila[6] || "";
 
-      function mostrarTabla(datos) {
-        cuerpo.innerHTML = "";
-        datos.forEach(fila => {
-          if (fila.length < 6) return;
-          const asin = fila[0] || "";
-          const enlace = fila[1] || "";
-          const nombre = fila[2] || "(Sin nombre)";
-          const precio = fila[3] || "";
-          const marca = fila[4] || "";
-          const categoria = fila[5] || "";
-          const descripcion = fila[6] || "";
+                    const tr = document.createElement("tr");
 
-          const tr = document.createElement("tr");
+                    const tdImg = document.createElement("td");
+                    const img = document.createElement("img");
+                    img.loading = "lazy";
+                    img.src = `imagenes_amazon/${asin}.jpg`;
+                    img.onerror = () => {
+                        img.src = "assets/logo_05.png";
+                        img.style.opacity = "0.7";
+                        img.style.objectFit = "contain";
+                        img.style.width = "80px";
+                        img.style.height = "80px";
+                    };
+                    tdImg.appendChild(img);
 
-          const tdImg = document.createElement("td");
-          const img = document.createElement("img");
-          img.loading = "lazy";
-          img.src = `imagenes_amazon/${asin}.jpg`;
-          img.onerror = () => {
-            img.src = "assets/logo_05.png";
-            img.style.opacity = "0.7";
-            img.style.objectFit = "contain";
-            img.style.width = "80px";
-            img.style.height = "80px";
-          };
-          tdImg.appendChild(img);
+                    const tdNombre = document.createElement("td");
+                    const a = document.createElement("a");
+                    a.href = enlace || "#";
+                    a.target = "_blank";
+                    a.classList.add("nombre-link");
+                    a.textContent = nombre;
+                    tdNombre.appendChild(a);
 
-          const tdNombre = document.createElement("td");
-          const a = document.createElement("a");
-          a.href = enlace || "#";
-          a.target = "_blank";
-          a.classList.add("nombre-link");
-          a.textContent = nombre;
-          tdNombre.appendChild(a);
+                    const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
+                    const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
+                    const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
+                    const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
 
-          const tdPrecio = document.createElement("td"); tdPrecio.textContent = precio;
-          const tdMarca = document.createElement("td"); tdMarca.textContent = marca;
-          const tdCategoria = document.createElement("td"); tdCategoria.textContent = categoria;
-          const tdDescripcion = document.createElement("td"); tdDescripcion.textContent = descripcion;
+                    const tdEstado = document.createElement("td");
+                    const estadoBtn = document.createElement("button");
+                    estadoBtn.classList.add("estado-btn");
+                    estadoBtn.style.border = "none";
+                    estadoBtn.style.background = "none";
+                    estadoBtn.style.cursor = "pointer";
+                    estadoBtn.style.fontSize = "20px";
+                    estadoBtn.title = "Cambiar estado";
 
-          const tdEstado = document.createElement("td");
-          const estadoBtn = document.createElement("button");
-          estadoBtn.classList.add("estado-btn");
-          estadoBtn.style.border = "none";
-          estadoBtn.style.background = "none";
-          estadoBtn.style.cursor = "pointer";
-          estadoBtn.style.fontSize = "20px";
-          estadoBtn.title = "Cambiar estado";
+                    const estados = [
+                        { emoji: "🟢", texto: "Disponible" },
+                        { emoji: "🟡", texto: "Reservado" },
+                        { emoji: "🔴", texto: "Vendido" }
+                    ];
 
-          const estados = [
-            { emoji: "🟢", texto: "Disponible" },
-            { emoji: "🟡", texto: "Reservado" },
-            { emoji: "🔴", texto: "Vendido" }
-          ];
+                    let estadoActual = (estadoProductos[asin] !== undefined) ? estadoProductos[asin] : 1;
+                    estadoBtn.textContent = estados[estadoActual].emoji;
+                    estadoBtn.title = estados[estadoActual].texto;
+                    estadoBtn.setAttribute("data-estado", estadoActual);
 
-          let estadoActual = (estadoProductos[asin] !== undefined) ? estadoProductos[asin] : 1;
-          estadoBtn.textContent = estados[estadoActual].emoji;
-          estadoBtn.title = estados[estadoActual].texto;
-          estadoBtn.setAttribute("data-estado", estadoActual);
+                    estadoBtn.addEventListener("click", () => {
+                        estadoActual = (estadoActual + 1) % estados.length;
+                        estadoProductos[asin] = estadoActual;
+                        estadoBtn.textContent = estados[estadoActual].emoji;
+                        estadoBtn.title = estados[estadoActual].texto;
+                        estadoBtn.setAttribute("data-estado", estadoActual);
+                        localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
+                    });
 
-          estadoBtn.addEventListener("click", () => {
-            estadoActual = (estadoActual + 1) % estados.length;
-            estadoProductos[asin] = estadoActual;
-            estadoBtn.textContent = estados[estadoActual].emoji;
-            estadoBtn.title = estados[estadoActual].texto;
-            estadoBtn.setAttribute("data-estado", estadoActual);
-            localStorage.setItem("estadoProductos", JSON.stringify(estadoProductos));
-          });
+                    tdEstado.appendChild(estadoBtn);
+                    tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
+                    cuerpo.appendChild(tr);
+                });
+            }
 
-          tdEstado.appendChild(estadoBtn);
-          tr.append(tdImg, tdNombre, tdPrecio, tdMarca, tdCategoria, tdDescripcion, tdEstado);
-          cuerpo.appendChild(tr);
-        });
-      }
+            // 🔎 BÚSQUEDA MULTIPALABRA + “MOSTRAR MÁS”
+            function aplicarFiltros() {
+                const texto = buscador.value.toLowerCase().trim();
+                const palabras = texto.split(/\s+/).filter(p => p.length > 0);
+                const filtroEstado = filtroActivo;
 
-      // 🔎 BÚSQUEDA MULTIPALABRA + “MOSTRAR MÁS”
-      function aplicarFiltros() {
-        const texto = buscador.value.toLowerCase().trim();
-        const palabras = texto.split(/\s+/).filter(p => p.length > 0);
-        const filtroEstado = filtroActivo;
+                const filtrados = window.allData.filter(f => {
+                    const asin = f[0];
+                    const textoProducto = f.join(" ").toLowerCase();
+                    const coincide = palabras.every(p => textoProducto.includes(p));
+                    const estado = estadoProductos[asin] ?? 1;
+                    if (filtroEstado === "todos") return coincide;
+                    return coincide && parseInt(filtroEstado) === estado;
+                });
 
-        const filtrados = window.allData.filter(f => {
-          const asin = f[0];
-          const textoProducto = f.join(" ").toLowerCase();
-          const coincide = palabras.every(p => textoProducto.includes(p));
-          const estado = estadoProductos[asin] ?? 1;
-          if (filtroEstado === "todos") return coincide;
-          return coincide && parseInt(filtroEstado) === estado;
-        });
+                cuerpo.innerHTML = "";
 
-        cuerpo.innerHTML = "";
-
-        if (filtrados.length === 0) {
-          cuerpo.innerHTML = `
+                if (filtrados.length === 0) {
+                    cuerpo.innerHTML = `
         <tr>
           <td colspan="7" class="text-center text-muted py-4">
             ⚠️ No se encontró ningún producto con esas palabras.
           </td>
         </tr>`;
-          return;
-        }
+                    return;
+                }
 
-        const limite = 10;
-        const mostrar = filtrados.slice(0, limite);
-        mostrarTabla(mostrar);
+                const limite = 10;
+                const mostrar = filtrados.slice(0, limite);
+                mostrarTabla(mostrar);
 
-        if (filtrados.length > limite) {
-          const filaExtra = document.createElement("tr");
-          filaExtra.innerHTML = `
+                if (filtrados.length > limite) {
+                    const filaExtra = document.createElement("tr");
+                    filaExtra.innerHTML = `
         <td colspan="7" class="text-center py-3">
           🔍 Se encontraron <b>${filtrados.length}</b> resultados.<br>
           <button id="btn-mostrar-mas" class="btn btn-outline-info mt-2">
             ➕ Mostrar más
           </button>
         </td>`;
-          cuerpo.appendChild(filaExtra);
+                    cuerpo.appendChild(filaExtra);
 
-          document.getElementById("btn-mostrar-mas").addEventListener("click", () => {
-            mostrarTabla(filtrados);
-          });
-        }
-      }
+                    document.getElementById("btn-mostrar-mas").addEventListener("click", () => {
+                        mostrarTabla(filtrados);
+                    });
+                }
+            }
 
-      // 🔁 RECARGAR INVENTARIO
-      document.getElementById("btn-refresh").addEventListener("click", async () => {
-        localStorage.clear();
-        estadoProductos = {};
-        filtroActivo = "todos";
-        await cargarInventario();
-      });
+            // 🔁 RECARGAR INVENTARIO
+            document.getElementById("btn-refresh").addEventListener("click", async () => {
+                localStorage.clear();
+                estadoProductos = {};
+                filtroActivo = "todos";
+                await cargarInventario();
+            });
 
-      buscador.addEventListener("input", aplicarFiltros);
+            buscador.addEventListener("input", aplicarFiltros);
 
-      document.querySelectorAll(".filter-option").forEach(opt => {
-        opt.addEventListener("click", e => {
-          e.preventDefault();
-          const filtro = e.target.getAttribute("data-filter");
-          filtroActivo = filtro;
-          localStorage.setItem("filtroActivo", filtro);
-          aplicarFiltros();
+            document.querySelectorAll(".filter-option").forEach(opt => {
+                opt.addEventListener("click", e => {
+                    e.preventDefault();
+                    const filtro = e.target.getAttribute("data-filter");
+                    filtroActivo = filtro;
+                    localStorage.setItem("filtroActivo", filtro);
+                    aplicarFiltros();
+                });
+            });
+
+            await cargarInventario();
         });
-      });
 
-      await cargarInventario();
-    });
+        // 🎬 SPLASH
+        window.addEventListener("load", () => {
+            const splash = document.getElementById("splash-screen");
+            setTimeout(() => {
+                splash.classList.add("fade-out");
+                setTimeout(() => splash.remove(), 1000);
+            }, 2000);
+        });
+    </script>
+    <!-- Cámara lector de códigos -->
+    <div id="qr-reader" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
+background:#000; padding:10px; border-radius:10px; z-index:9999;"></div>
 
-    // 🎬 SPLASH
-    window.addEventListener("load", () => {
-      const splash = document.getElementById("splash-screen");
-      setTimeout(() => {
-        splash.classList.add("fade-out");
-        setTimeout(() => splash.remove(), 1000);
-      }, 2000);
-    });
-  </script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        let scannerVisible = false;
+        let html5QrcodeScanner;
+
+        document.getElementById("btn-scan").addEventListener("click", () => {
+            const qrDiv = document.getElementById("qr-reader");
+
+            if (!scannerVisible) {
+                qrDiv.style.display = "block";
+                html5QrcodeScanner = new Html5Qrcode("qr-reader");
+                html5QrcodeScanner.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: 250 },
+                    (decodedText) => {
+                        document.getElementById("buscador").value = decodedText;
+                        aplicarFiltros(); // tu función ya existente
+                        stopScanner();
+                    }
+                );
+                scannerVisible = true;
+            } else {
+                stopScanner();
+            }
+        });
+
+        function stopScanner() {
+            const qrDiv = document.getElementById("qr-reader");
+            if (html5QrcodeScanner) {
+                html5QrcodeScanner.stop().then(() => {
+                    qrDiv.style.display = "none";
+                    scannerVisible = false;
+                }).catch((err) => console.error("Error al detener cámara:", err));
+            }
+        }
+    </script>
 
 </body>
+
 </html>
