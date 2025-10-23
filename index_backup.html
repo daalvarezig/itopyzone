@@ -6,11 +6,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iT@pyz0n-e</title>
 
-  <!-- Bootstrap y estilos externos -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8fbff;
+      color: #0f172a;
+    }
+
+    /* ===== 🌀 SPLASH ===== */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #00304a 0%, #00121e 100%);
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+
+    #splash-logo {
+      width: 45vw;
+      max-width: 420px;
+      filter: drop-shadow(0 0 25px rgba(0, 224, 255, 0.7));
+      animation: pulse 2s infinite ease-in-out;
+      border-radius: 25px;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.08);
+        opacity: 0.9;
+      }
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: linear-gradient(90deg, #08122d, #0a1a3f, #102a6b);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .navbar-brand {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #00e0ff !important;
+      text-shadow: 0 0 6px rgba(0, 224, 255, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-brand img {
+      max-height: 60px;
+      width: auto;
+    }
+
+    /* ===== BOTÓN RECARGAR ===== */
+    #btn-refresh {
+      background: linear-gradient(90deg, #007BFF, #00E0FF);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    #btn-refresh:hover {
+      background: linear-gradient(90deg, #005fcc, #00b4ff);
+      transform: scale(1.05);
+    }
+
+    /* ===== ICONO DROPDOWN ===== */
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .settings-icon {
+      font-size: 1.3rem;
+      color: #00e0ff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .settings-icon:hover {
+      color: linear-gradient(90deg, #005fcc, #00b4ff);
+      transform: scale(1.50);
+    }
+
+    /* ===== BUSCADOR CENTRADO ===== */
+    .search-bar {
+      width: 350px;
+    }
+
+    @media (max-width: 992px) {
+      .search-bar {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+
+    /* ===== IMÁGENES INVENTARIO ===== */
+    table img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      table img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -23,11 +152,16 @@
   <nav class="navbar navbar-expand-lg navbar-dark px-4">
     <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded neon-logo" data-bs-toggle="modal" data-bs-target="#timelineModal">
-        📦 B13nven1d0 <span>a mi D3sván</span>
+        <img src="assets/logo_05.png" alt="Logo" class="me-2 rounded neon-logo" style="cursor:pointer;"
+          data-bs-toggle="modal" data-bs-target="#timelineModal">
+        📦 B13nven1d0 a mi D3sván
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -69,6 +203,48 @@
     <i class="bi bi-telegram"></i>
   </a>
 
+  <style>
+    .telegram-float-top {
+      position: fixed;
+      top: 95px;
+      right: 25px;
+      background: linear-gradient(90deg, #007BFF, #00E0FF);
+      color: white;
+      font-size: 26px;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .telegram-float-top:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes floatBounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .telegram-float-top {
+      animation: floatBounce 2.5s ease-in-out infinite;
+    }
+  </style>
+
+
   <!-- 🔹 CONTENIDO -->
   <main class="container mt-4">
     <div id="cargando" class="text-center text-muted mb-3" style="font-style: italic;">
@@ -93,24 +269,7 @@
     </div>
   </main>
 
-  <!-- 🔹 MODAL TIMELINE -->
-  <div class="modal fade neon-fade" id="timelineModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content bg-dark border-info neon-border">
-        <div class="modal-header border-info">
-          <h5 class="modal-title text-info">
-            ⏳ Timeline iT@pyz0n-e — Venta Wallapop 1 DIC
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-0">
-          <iframe src="panel_iT@pyzon-e.html" style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ====== SCRIPT PRINCIPAL ====== -->
+  <!-- ====== SCRIPT UNIFICADO Y CORREGIDO ====== -->
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       let estadoProductos = JSON.parse(localStorage.getItem("estadoProductos") || "{}");
@@ -232,7 +391,7 @@
         });
       }
 
-      // 🔎 BÚSQUEDA MULTIPALABRA + “MOSTRAR MÁS”
+      // 🔎 BÚSQUEDA MEJORADA MULTIPALABRA + “MOSTRAR MÁS” + MENSAJES
       function aplicarFiltros() {
         const texto = buscador.value.toLowerCase().trim();
         const palabras = texto.split(/\s+/).filter(p => p.length > 0);
@@ -280,7 +439,7 @@
         }
       }
 
-      // 🔁 RECARGAR INVENTARIO
+      // 🔁 BOTÓN RECARGAR
       document.getElementById("btn-refresh").addEventListener("click", async () => {
         localStorage.clear();
         estadoProductos = {};
@@ -288,6 +447,7 @@
         await cargarInventario();
       });
 
+      // 🧭 BUSCADOR Y FILTROS
       buscador.addEventListener("input", aplicarFiltros);
 
       document.querySelectorAll(".filter-option").forEach(opt => {
@@ -303,7 +463,7 @@
       await cargarInventario();
     });
 
-    // 🎬 SPLASH
+    // 🎬 SPLASH DESAPARECE
     window.addEventListener("load", () => {
       const splash = document.getElementById("splash-screen");
       setTimeout(() => {
@@ -312,6 +472,79 @@
       }, 2000);
     });
   </script>
+  </style>
+  <!-- MODAL TIMELINE -->
+  <div class="modal fade neon-fade" id="timelineModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark border-info neon-border">
+        <div class="modal-header border-info">
+          <h5 class="modal-title text-info">
+            ⏳ Timeline iT@pyz0n-e — Venta Wallapop 1 DIC
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <iframe src="panel_iT@pyzon-e.html" style="width:100%; height:80vh; border:none; border-radius:8px;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EFECTOS -->
+  <style>
+    .neon-fade .modal-dialog {
+      animation: neonFadeIn 0.6s ease forwards;
+    }
+
+    @keyframes neonFadeIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(0, 224, 255, 0);
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 25px rgba(0, 224, 255, 0.3);
+      }
+    }
+
+    .neon-border {
+      box-shadow: 0 0 20px rgba(0, 224, 255, 0.25), inset 0 0 10px rgba(0, 224, 255, 0.15);
+      border: 1px solid rgba(0, 224, 255, 0.4);
+      transition: box-shadow 0.5s ease;
+    }
+
+    .neon-border:hover {
+      box-shadow: 0 0 30px rgba(0, 224, 255, 0.4), inset 0 0 15px rgba(0, 224, 255, 0.25);
+    }
+
+    /* Destello en logo */
+    .neon-logo:active {
+      animation: logoFlash 0.4s ease;
+    }
+
+    @keyframes logoFlash {
+      0% {
+        filter: drop-shadow(0 0 0px #00e0ff);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px #00e0ff) brightness(1.6);
+        transform: scale(1.1);
+      }
+
+      100% {
+        filter: drop-shadow(0 0 0px #00e0ff);
+        transform: scale(1);
+      }
+    }
+  </style>
+
+
+
 
 </body>
+
 </html>
