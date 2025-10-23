@@ -38,10 +38,13 @@
 
 
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
+            <!-- 👇 BOTÓN MENÚ INTERACTIVO -->
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Alternar navegación">
+                👇
             </button>
+
 
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <form class="d-flex search-bar align-items-center" role="search" onsubmit="event.preventDefault();">
@@ -57,12 +60,7 @@
                     <li class="nav-item me-3">
                         <button id="btn-refresh">🔄 Recargar</button>
                     </li>
-                    <li class="nav-item me-3">
-                        <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
-                            target="_blank" class="btn btn-success">
-                            💬 WhatsApp
-                        </a>
-                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -371,6 +369,11 @@ background:#000; padding:10px; border-radius:10px; z-index:9999;"></div>
             }
         }
     </script>
+    <!-- 🟢 BURBUJA FLOTANTE — WHATSAPP -->
+    <a href="https://wa.me/34621363654?text=Hola%20David,%20vengo%20desde%20tu%20Desván%20iT@pyz0n-e!"
+        class="float-top-whatsapp" target="_blank" title="Contactar por WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
 </body>
 
